@@ -63,8 +63,8 @@ If a package is already installed, you will need to load it every session. You c
 
 ```{r packages}
 # We will use the packages dplyr and ggplot2 regularly. 
-#install.packages("dplyr") 
-#install.packages("ggplot2")
+install.packages("dplyr") 
+install.packages("ggplot2")
 # comment out install commands, use only when needed and re-comment
 
 library(dplyr)
@@ -100,15 +100,18 @@ Commons functions to import datasets and store as data frames are *read.table()*
 #read.csv("/Users/lmm89/OneDrive/Duke_University/7_Spring2021/ENV872_EDA/GitRepo_EDA_S2021/Environmental_Data_Analytics_2021/Data/Raw/USGS_Site02085000_Flow_Raw.csv")
 
 # Relative file path (friendly for users regardless of machine)
-USGS.flow.data <- read.csv("../Data/Raw/USGS_Site02085000_Flow_Raw.csv")   
+USGS.flow.data <- read.csv("./Data/Raw/USGS_Site02085000_Flow_Raw.csv",
+                           stringsAsFactors=TRUE)   
 #For knitting the .Rmd file you need to added an extra "." to the relative path
 # R Markdown documents are compiled in separate R sessions to enhance reproducibility, so you current R console has nothing to do with the compilation of the R Markdown documents.
+read.csv("./Data/Raw/USGS_Site02085000_Flow_Raw.csv")
 
+getwd()
 # What happens if we don't assign a name to our imported dataset?
 #read.csv("../Data/Raw/USGS_Site02085000_Flow_Raw.csv")
 
 # Another option is to choose with your browser
-# read.csv(file.choose())
+read.csv(file.choose())
 
 # To import .txt files, use read.table rather than read.csv
 #read.table()
@@ -154,7 +157,7 @@ summary(USGS.flow.data)  #could point to column only with $
 ```
 
 What happened to blank cells in the spreadsheet when they were imported into R?
-> Answer: 
+> Answer: It shows NA
 
 ## Adjusting Datasets
 
@@ -168,7 +171,7 @@ summary(USGS.flow.data$gage.height.mean)
 ```
 Question: What types of research questions might make it favorable to remove NAs from a dataset, and what types of research questions might make it favorable to retain NAs in the dataset?
 
-> Answer: 
+> Answer: you might want to remove NAs to be able to compute mean. You may want to leave NAs to show that there wasn't enough information.
 
 ```{r removeNA}
 USGS.flow.data.complete <- na.omit(USGS.flow.data)
@@ -200,7 +203,7 @@ In some cases when dates are provided as integers, you may need to provide an or
 
 ```{r formatDate}
 help(as.Date)
-
+View(USGS.flow.data)
 
 USGS.flow.data$datetime <- as.Date(USGS.flow.data$datetime, format = "%m/%d/%y") 
 ```
@@ -229,8 +232,9 @@ We just edited our raw dataset into a processed form. We may want to return to t
 
 
 ```{r savingdata}
+
 # Note the added "." again for .Rmd 
-write.csv(USGS.flow.data, file = "../Data/Processed/USGS_Site02085000_Flow_Processed.csv", row.names=FALSE)
+write.csv(USGS.flow.data, file = "./Data/Processed/USGS_Site02085000_Flow_Processed.csv", row.names=FALSE)
 
 ```
 
