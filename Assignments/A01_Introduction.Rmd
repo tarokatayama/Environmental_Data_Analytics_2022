@@ -1,6 +1,6 @@
 ---
 title: "Assignment 1: Introduction"
-author: "Student Name"
+author: "Taro Katayama"
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -22,21 +22,20 @@ The completed exercise is due on <>.
 
 1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
-> Answer: 
+> Answer: Listing from least experienced to experienced: Git, R, data analytics. This semester is the first time I am using Git. I have had a little bit of previous R exposure, particularily in Hydrology, and in undergrad. However, my knowledge of R is very limited and basic. If you count excel as data analytics, I have experience doing basic analysis with raw data on excel.
 
 2. Are there any components of the course about which you feel confident?
 
-> Answer: 
+> Answer: I do not believe I am confident with any component.
 
 3. Are there any components of the course about which you feel apprehensive?
 
-> Answer: 
+> Answer: I am fearful that I will get stuck on a section of a lab and not able to carry on from the point where I get stuck.
 
 
 ## 2) GitHub
 
 Provide a link below to your forked course repository in GitHub. Make sure you have pulled all recent changes from the course repository  and that you have updated your course README file. 
 
-> Answer: 
-
+> Answer: https://github.com/tarokatayama/Environmental_Data_Analytics_2022.git
 
