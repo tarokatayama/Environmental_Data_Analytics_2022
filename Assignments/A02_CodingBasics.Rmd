@@ -1,6 +1,6 @@
 ---
 title: "Assignment 2: Coding Basics"
-author: "Student Name"
+author: "Taro Katayama"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -31,12 +31,22 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 4. Insert comments in your code to describe what you are doing.
 
 ```{r}
-#1. 
+#1.
+seq(1,100,4)
+hundred_sequence<-seq(1,100,4)
+#created sequence beginning from 1, ending in 100, increasing by four
+#assigned this function a name hundred_sequence
 
 #2. 
+mean(hundred_sequence)
+#calculated mean of function hundred_sequence
+
+median(hundred_sequence)
+#calculated median of function hundred_sequence
 
 #3. 
-
+mean(hundred_sequence)>median(hundred_sequence)
+#created a conditional statement asking if mean of hundred_sequence is greater than median of hundred_sequence
 ```
 
 ## Basics Day 2
@@ -50,21 +60,48 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 8. Label the columns of your data frame with informative titles.
 
 ```{r}
+#5
+test_score<- c(95,70,25,80)
+#test scores uses numbers as the mode
 
+student_name<-c("Taro", "Gitmo", "Goop", "EEEEEEEE")
+#student_name uses characters as the mode
+
+test_pass_fail<-c(TRUE,TRUE,FALSE,TRUE)
+#test_pass_fail uses characters as the mode
+#7/8
+class_statistics<-data.frame("student name"=student_name, "test score"=test_score, "test results"=test_pass_fail)
+class_statistics
 ```
 
 9. QUESTION: How is this data frame different from a matrix?
 
-> Answer: 
+> Answer: This data frame is different from a matrix because it includes different modes. Matrices cannot have different modes. 
 
 10. Create a function with an if/else statement. Your function should determine whether a test score is a passing grade of 50 or above (TRUE or FALSE). You will need to choose either the `if` and `else` statements or the `ifelse` statement. Hint: Use `print`, not `return`. The name of your function should be informative.
 
 11. Apply your function to the vector with test scores that you created in number 5. 
 
 ```{r}
+#10
+#if else
+pass_fail_function<-function(x) {
+  if (x>=50) {x=TRUE}
+  else {x=FALSE}
+}
+#ifelse
+pass_fail_function_if_else<-function(x) { 
+ifelse(x>=50, TRUE, FALSE)
+}
+
+#11
+passing_grade<-pass_fail_function(test_score)
+
+test_function<-pass_fail_function_if_else(test_score)
+print(test_function)
 
 ```
 
 12. QUESTION: Which option of `if` and `else` vs. `ifelse` worked? Why?
 
-> Answer: 
+> Answer: 'ifelse' worked for me. It worked because it is a valid logical function, where the test scores met the function demands, where if x is greater than or equal to 50, it would output TRUE, and anything else would output FALSE
