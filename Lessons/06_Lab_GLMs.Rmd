@@ -14,7 +14,7 @@ editor_options:
 3. Additional comments on videos - t-test
 4. Practice more application GLM to real datasets
 
-
+#correlation matrix used to look at multiple variables, where variables may have high correlation between each other. 
 ## Set up
 ```{r, message = FALSE}
 library(tidyverse)
@@ -151,8 +151,29 @@ Create three plots, each with appropriately formatted axes and legends. Choose a
 
 ```{r}
 #Exercise 2:
+lab6plot1<-
+  ggplot(EPAair, aes(x=Ozone, fill= as.factor(Year)))+
+  geom_density(alpha=.5)+
+  scale_fill_manual(values= c("darkgreen", "darkblue"))+
+  labs(x="Ozone AQI Value", y="Density", fill = "")
 
+print(lab6plot1)
 
+lab6plot2<-
+  ggplot(EPAair, aes(x=as.factor(Year), y= Ozone))+
+  geom_boxplot()+
+  stat_summary(geom="text", fun.y =max, vjust = -1, size = 4,
+               label =c("b", "a"))+
+  labs(x="", y= "Ozone AQI value")+
+  ylim(0,150)
+print(lab6plot2)
+
+lab6plot3<-
+  ggplot(EPAair, aes(x= as.factor(Year), y=Ozone))+
+  geom_violin(draw_quantiles = 0.5)+
+  stat_summary(geom="text", fun.y =max, vjust = -1, size = 4,
+               label =c("b", "a"))
+print(lab6plot3)
 ```
 
 ## Linear Regression
@@ -164,12 +185,17 @@ For the NTL-LTER dataset, can we predict PM2.5 from Ozone?
 ```{r}
 
 #Exercise 3: Run a linear regression PM2.5 by Ozone. Find the p-value and R-squared value. 
-
+PM2.5OzoneRegression<-
+  lm(data = EPAair, PM2.5 ~ Ozone)
+summary(PM2.5OzoneRegression)
 
 
 #Exercise 4: Build a scatterplot. Add a line and standard error for the linear regression. 
-
-
+PM2.5Ozonescatter<- EPAair%>%
+  ggplot(aes(x=Ozone, y=PM2.5))+
+  geom_point()+
+  geom_smooth(method="lm", col="blue")
+print(PM2.5Ozonescatter)
 
 ```
 
@@ -181,16 +207,22 @@ What other variables can we add to improve model?
 ```{r}
 
 #Exercise 5: Build correlation plots and identify more possible explanatory variables to add to the regression.
-
-
-
+EPAairselectvariables<-EPAair %>%
+  select(meanLat:Ozone) %>%
+  na.omit()
+EPACorr<- cor(EPAairselectvariables)
+corrplot(EPACorr, method = "ellipse")
+corrplot.mixed(EPACorr, upper = "ellipse")
 
 #Exercise 6: Choose a model by AIC in a Stepwise Algorithm. Do the results from AIC match the variables you selected on Exercise 5?
+OzonebyAll.regression<- lm(data=EPAairselectvariables, PM2.5~ Ozone+Year+Month+meanLat+meanLng)
 
+step(OzonebyAll.regression)
 
-
-
-#Exercise 7: Run another regression using the variables selected on Exercise 6. Compare r-squared value with the one from Exercise 5. 
+#Exercise 7: Run another regression using the variables selected on
+Ozonebestregression<- lm(data=EPAairselectvariables, PM2.5~ Ozone+Month+meanLat+meanLng)
+summary(Ozonebestregression)
+#Exercise 6. Compare r-squared value with the one from Exercise 5. 
 
 ```
 

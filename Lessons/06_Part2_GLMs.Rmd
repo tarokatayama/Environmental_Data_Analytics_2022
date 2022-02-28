@@ -16,8 +16,10 @@ editor_options:
 ```{r, message = FALSE}
 getwd()
 library(tidyverse)
-#install.packages("agricolae")
-library(agricolae)   #you may need to install/update package "htmltools" before installing and loading agricolae
+install.packages("agricolae")
+library(agricolae)   
+install.packages("htmltools")
+#you may need to install/update package "htmltools" before installing and loading agricolae
 
 Litter <- read.csv("./Data/Processed/NEON_NIWO_Litter_mass_trap_Processed.csv", stringsAsFactors = TRUE)
 
@@ -76,6 +78,7 @@ bartlett.test(Litter.Totals$dryMass ~ Litter.Totals$plotID)
 # Format ANOVA as aov
 Litter.Totals.anova <- aov(data = Litter.Totals, dryMass ~ plotID)
 summary(Litter.Totals.anova)
+#first variable is continuous, second is categorical, what is being tested.
 
 #results: reject null hypothesis i.e. difference between a pair of group means is statiscally significant
 
@@ -94,7 +97,7 @@ TukeyHSD(Litter.Totals.anova)
 # Extract groupings for pairwise relationships
 Litter.Totals.groups <- HSD.test(Litter.Totals.anova, "plotID", group = TRUE)
 Litter.Totals.groups
-
+help("HSD.test")
 # Graph the results
 Litter.Totals.plot <- ggplot(Litter.Totals, aes(x = plotID, y = dryMass)) +
   geom_boxplot() +

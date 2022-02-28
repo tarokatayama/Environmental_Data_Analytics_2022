@@ -119,6 +119,7 @@ Given the distribution of irradiance values, we don't have a linear relationship
 ```{r, fig.height = 3, fig.width = 4}
 PeterPaul.chem.nutrients <- filter(PeterPaul.chem.nutrients, 
                                    irradianceWater != 0 & irradianceWater < 5000)
+#irradiance explained by depth.
 irradiance.regression2 <- lm(data = PeterPaul.chem.nutrients, log(irradianceWater) ~ depth)
 summary(irradiance.regression2)
 
@@ -170,7 +171,7 @@ par(mfrow = c(1,1))
 We can also make exploratory plots of several continuous data points to determine possible relationships, as well as covariance among explanatory variables. 
 
 ```{r, fig.height = 3, fig.width = 4}
-#install.packages("corrplot")
+
 library(corrplot)
 PeterPaulnutrients <- 
   PeterPaul.chem.nutrients %>%
@@ -191,7 +192,8 @@ Let's say we want to know which explanatory variables will allow us to best pred
 Paul.naomit <- PeterPaul.chem.nutrients %>%
   filter(lakename == "Paul Lake") %>%
   na.omit()
-
+#could be removed if AIC is lower than starting point, should be kept if variable leads to higher AIC. 
+#AIC removes variables one at a time
 TPAIC <- lm(data = Paul.naomit, tp_ug ~ depth + dissolvedOxygen + 
               temperature_C + tn_ug + po4)
 
