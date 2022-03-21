@@ -80,11 +80,12 @@ mapView(counties_sf, zcol = "AWATER")
 
 ```{r read HUCs shapefile}
 #Read the shapefile into an sf dataframe named "huc8_sf"
-
+huc8_sf<- st_read("./Data/Spatial/NCHUC8.shp")
 
 
 #View the data as a map, colored by the acreage in each
-
+ggplot()+
+  geom_sf(data=huc8_sf, aes(fill=ACRES))
 
 ```
 
@@ -94,7 +95,8 @@ mapView(counties_sf, zcol = "AWATER")
 
 ```{r Select the Upper Neuse HUC 8}
 #Read the shapefile into an sf dataframe
-
+upperneuse<- huc8_sf%>%
+  
 
 
 #Create a map
@@ -114,7 +116,10 @@ The URL '<https://raw.githubusercontent.com/ENV859/EnviroAtlasData/main/Wind_Ene
 
 ```{r}
 #Compute HUC8 wind energy
-
+wind_data<- read.csv("https://raw.githubusercontent.com/ENV859/EnviroAtlasData/main/Wind_Energy.csv>", colClasses = c('Huc_12'='factor'))%>%
+  mutate(HUC_8 = substr(Huc_12,8))%>%
+  group_by(HUC_8)%>%
+  summarise(SumwindEnergy = sum(AvgwindEnergy))
 
 
 
@@ -155,7 +160,7 @@ On top of projecting any geographic data to adjust for the limitations of the so
 ```{r Transform the datasets to other coordinate reference systems}
 #Convert all to UTM Zone 17 (crs = 26917)
 epa_sf_utm <-      st_transform(epa_pm25_sites_sf, crs = 26917)
-counties_sf_utm <- 
+counties_sf_utm <- st_transform(counties_sf, crs = 26917)
 state_sf_utm <-    
 huc8_sf_utm <-     
 huc2_utm <-        
@@ -168,12 +173,13 @@ Select the counties in the "Triangle" (Chatham, Durham, Orange, and Wake). Then 
 
 ```{r EXERCISE: Clipping}
 #Select the Triangle counties from the sf_counties dataframe
+traingle_sf<- counties_sf_utm%>%
+  filter(NAME %in% c("Chatham", "Durham", "Orange", "Wake"))
 
-
-
+mapview(triangle_sf)
   
 #Grab the intersecting HUC_8s
-
+selected_HUCS<- huc8_sf_utm[traingle_sf,]
 
 
 #Intersect the HUC_8s

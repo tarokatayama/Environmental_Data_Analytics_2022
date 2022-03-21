@@ -50,6 +50,7 @@ library(tidyverse)
 library(lubridate)
 library(sf)
 library(mapview)
+mapviewOptions(fgb = FALSE)
 library(RColorBrewer)
 ```
 

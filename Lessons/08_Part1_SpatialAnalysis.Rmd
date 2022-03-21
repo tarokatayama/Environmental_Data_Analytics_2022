@@ -32,13 +32,13 @@ The packages we'll need for this lesson are below. Install as necessary and ensu
 library(tidyverse, quietly = TRUE)
 library(lubridate)
 
-#install.packages('sf')
+install.packages('sf')
 library(sf)
-#install.packages('leaflet')
+install.packages('leaflet')
 library(leaflet)
-#install.packages('mapview')
+install.packages('mapview')
 library(mapview)
-
+mapviewOptions(fgb = FALSE)
 #Disable on-the-fly projections
 sf::sf_use_s2(FALSE)
 ```
@@ -92,6 +92,8 @@ ggplot(data=GasPlants) + geom_sf()
 #View using mapview
 mapview(GasPlants)
 
+mapviewOptions(fgb = FALSE)
+mapview(breweries)
 ```
 
 
@@ -117,7 +119,7 @@ EPAair.sites <- EPAair %>%
 EPAair.sf <- EPAair.sites %>% 
   st_as_sf(coords = c('SITE_LONGITUDE','SITE_LATITUDE'),
            crs=4326)
-
+mapview(EPAair.sf)
 #View the data using the methods above...
 
 ```
