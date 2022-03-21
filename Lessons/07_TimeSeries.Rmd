@@ -37,8 +37,7 @@ mytheme <- theme_classic(base_size = 14) +
 theme_set(mytheme)
 
 #Read Eno river data
-EnoDischarge <- read.csv("./Data/Processed/USGS_Site02085000_Flow_Processed.csv",
-                         stringsAsFactors = TRUE)
+EnoDischarge <- read.csv("./Data/Processed/USGS_Site02085000_Flow_Processed.csv",stringsAsFactors = TRUE)
 EnoDischarge$datetime <- as.Date(EnoDischarge$datetime, format = "%Y-%m-%d")
 
 #Read wind speed data
@@ -63,8 +62,10 @@ Analysis of time series presents several opportunities. For environmental data, 
 ### Challenges
 
 Time series datasets come with several caveats, which need to be addressed in order to effectively model the system. A few common challenges that arise (and can occur together within a single dataset) are: 
+#correlation-(-1,1)
 
 * **Autocorrelation**: Data points are not independent from one another (i.e., the measurement at a given time point is dependent on previous time point(s))
+#self correlation between same data set. Lagged observation of same variable
 * **Data gaps**: Data are not collected at regular intervals, necessitating *interpolation* between measurements.
 * **Seasonality**: seasonal patterns in variables occur at regular intervals, impeding clear interpretation of a monotonic (unidirectional) trend.
 * **Heteroscedasticity**: The variance of the time series is not constant over time
