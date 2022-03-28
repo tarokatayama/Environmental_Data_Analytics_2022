@@ -19,7 +19,7 @@ getwd()
 library(tidyverse)
 library(lubridate)
 
-#install.packages("rvest")
+install.packages("rvest")
 library(rvest)
 
 # Set theme
